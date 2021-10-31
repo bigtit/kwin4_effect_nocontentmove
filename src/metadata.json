@@ -1,0 +1,19 @@
+{
+  "KPlugin": {
+    "Authors": [{
+      "Email": "bigtit@foxmail.com",
+      "Name": "bigtit"
+    }],
+    "Category": "Appearance",
+    "Description": "Hide Window Content When Moved",
+    "Description[x-test]": "xxHide Window Content When Movedxx",
+    "EnabledByDefault": false,
+    "Id": "kwin4_effect_nocontentmove",
+    "License": "GPL",
+    "Name": "No Content Move",
+    "Name[x-test]": "xxNo Content Movexx",
+    "ServiceTypes": [
+      "KWin/Effect"
+    ]
+  }
+}
