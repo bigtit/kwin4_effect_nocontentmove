@@ -43,7 +43,7 @@ void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region,
     // QRegion intersection = m_originalGeometry.intersected(m_currentGeometry);
     // QRegion paintRegion = QRegion(m_originalGeometry).united(m_currentGeometry).subtracted(intersection);
     QRegion paintRegion = QRegion(m_currentGeometry);
-    float alpha = 0.8f;
+    float alpha = 0.3f;
     QColor color = KColorScheme(QPalette::Normal, KColorScheme::Selection).background().color();
     if (effects->isOpenGLCompositing()) {
       GLVertexBuffer* vbo = GLVertexBuffer::streamingBuffer();
