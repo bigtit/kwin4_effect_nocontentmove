@@ -30,15 +30,15 @@ void NoContentMoveEffect::prePaintWindow(EffectWindow* w, WindowPrePaintData& da
   AnimationEffect::prePaintWindow(w, data, presentTime);
 }
 
-// core function
+// each frame painting
 void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region, WindowPaintData& data) {
   if (m_active && w == m_moveWindow) {
-    // draw the window content when moving
     // effects->paintWindow(w, mask, region, data);
     // so just replace the region with m_originalGeometry
-    // but note that data (window content) is also modified when moving
+    // but note that `data` (window content) is also modified when moving a window
     data.translate(m_originalGeometry.x()-m_currentGeometry.x(), m_originalGeometry.y()-m_currentGeometry.y(), 0);
-    effects->paintWindow(w, mask, m_originalGeometry, data);
+    // effects->paintWindow(w, mask, m_originalGeometry, data);
+    effects->paintWindow(w, mask, region, data);
     // no intersected region will be painted with color
     // QRegion intersection = m_originalGeometry.intersected(m_currentGeometry);
     // QRegion paintRegion = QRegion(m_originalGeometry).united(m_currentGeometry).subtracted(intersection);
