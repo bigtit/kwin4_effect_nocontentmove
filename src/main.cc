@@ -9,9 +9,10 @@
 namespace KWin
 {
 
-KWIN_EFFECT_FACTORY(NoContentMoveEffectFactory,
-                    NoContentMoveEffect,
-                    "metadata.json")
+KWIN_EFFECT_FACTORY_SUPPORTED_ENABLED(NoContentMoveEffect,
+                                      "metadata.json",
+                                      return NoContentMoveEffect::supported();,
+                                      return false;)
 
 } // namespace KWin
 

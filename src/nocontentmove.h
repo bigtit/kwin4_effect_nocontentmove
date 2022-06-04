@@ -18,6 +18,8 @@ public:
 
   int requestedEffectChainPosition() const override { return 60; }
 
+  static bool supported();
+
 public Q_SLOTS:
   void slotWindowStartUserMovedResized(KWin::EffectWindow* w);
   void slotWindowStepUserMovedResized(KWin::EffectWindow* w, const QRect& geometry);

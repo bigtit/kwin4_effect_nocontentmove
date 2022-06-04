@@ -30,6 +30,12 @@ void NoContentMoveEffect::prePaintWindow(EffectWindow* w, WindowPrePaintData& da
   AnimationEffect::prePaintWindow(w, data, presentTime);
 }
 
+bool NoContentMoveEffect::supported() {
+  // restrict this effect to opengl only
+  // return KWin::effects->isOpenGLCompositing();
+  return true;
+}
+
 // each frame painting
 void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region, WindowPaintData& data) {
   if (m_active && w == m_moveWindow) {
