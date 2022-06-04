@@ -1,5 +1,5 @@
 # kwin4_effect_nocontentmove
-A simple and badly-implemented kwin effect plugin that hides content when moving a window, for Plasma/5.22, and should work for other Plasma versions.
+A simple and badly-implemented kwin effect plugin that hides content when moving a window, for Plasma/5.22&5.23, **but not compatible with Plasma/5.24 and onwards**.
 
 - tested on compositor with OpenGL backend.
 - inspired by `kwin/src/effects/resize`.
