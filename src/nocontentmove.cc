@@ -73,8 +73,15 @@ void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region,
       vbo->render(GL_TRIANGLES);
       glDisable(GL_BLEND);
     }
+    else if (effects->compositingType() == QPainterCompositing) {
+      QPainter* painter = effects->scenePainter();
+      painter->save();
+      color.setAlphaF(alpha);
+      for (const QRect& r : paintRegion) painter->fillRect(r, color);
+      painter->restore();
+    }
 #ifdef KWIN_HAVE_XRENDER_COMPOSITIN
-    if (effects->compositingType() == XRenderCompositing) {
+    else if (effects->compositingType() == XRenderCompositing) {
       QVector<xcb_rectangle_t> rects;
       for (const QRect& r : paintRegion) {
         xcb_rectangle_t rect = {int16_t(r.x()), int16_t(r.y()), uint16_t(r.width()), uint16_t(r.height())};
@@ -85,13 +92,6 @@ void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region,
                                  rects.count(), rects.constData());
     }
 #endif
-    if (effects->compositingType() == QPainterCompositing) {
-      QPainter* painter = effects->scenePainter();
-      painter->save();
-      color.setAlphaF(alpha);
-      for (const QRect& r : paintRegion) painter->fillRect(r, color);
-      painter->restore();
-    }
   } else {
     AnimationEffect::paintWindow(w, mask, region, data);
   }
