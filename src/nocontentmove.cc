@@ -39,18 +39,15 @@ bool NoContentMoveEffect::supported() {
 // each frame painting
 void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region, WindowPaintData& data) {
   if (m_active && w == m_moveWindow) {
-    // effects->paintWindow(w, mask, region, data);
-    // so just replace the region with m_originalGeometry
-    // but note that `data` (window content) is also modified when moving a window
-    data.translate(m_originalGeometry.x()-m_currentGeometry.x(), m_originalGeometry.y()-m_currentGeometry.y(), 0);
-    // effects->paintWindow(w, mask, m_originalGeometry, data);
+    // from Plasma/5.24, `data` will be changed by user's operatios in real-time
+    // specifically, window layout in `data` will be changed when resized
+    // so the resize effect is impossible to be implemented like before Plasma/5.24
+    data += (m_originalGeometry.topLeft() - m_currentGeometry.topLeft());
     effects->paintWindow(w, mask, region, data);
-    // no intersected region will be painted with color
-    // QRegion intersection = m_originalGeometry.intersected(m_currentGeometry);
-    // QRegion paintRegion = QRegion(m_originalGeometry).united(m_currentGeometry).subtracted(intersection);
     QRegion paintRegion = QRegion(m_currentGeometry);
     float alpha = 0.3f;
     QColor color = KColorScheme(QPalette::Normal, KColorScheme::Selection).background().color();
+
     if (effects->isOpenGLCompositing()) {
       GLVertexBuffer* vbo = GLVertexBuffer::streamingBuffer();
       vbo->reset();
@@ -102,7 +99,7 @@ void NoContentMoveEffect::paintWindow(EffectWindow* w, int mask, QRegion region,
 
 // following 3 functions are to update the memory data of moved window
 void NoContentMoveEffect::slotWindowStartUserMovedResized(EffectWindow* w) {
-  if (w->isUserMove()) {
+  if (w->isUserMove() && !w->isUserResize()) {
     m_active = true;
     m_moveWindow = w;
     m_originalGeometry = w->geometry();
